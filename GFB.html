@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Love!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            background: #000000;
+            background-image: url('images/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.7); /* Darkened for better readability */
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .heart {
+            font-size: 5rem;
+            color: #ff0000;
+            animation: pulse 1.5s infinite;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        .countdown {
+            font-size: 2rem;
+            margin: 2rem 0;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 1rem;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            width: 100%;
+            padding: 1rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            perspective: 1000px;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px; /* Increased from 200px */
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .gallery-item:hover img {
+            transform: rotateY(180deg);
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .wishes {
+            margin: 2rem auto;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .wish {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards;
+            margin: 1rem 0;
+            font-size: 1.2rem;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .music-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 0, 0, 0.8);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 0, 0, 0.3);
+            animation: float 15s linear infinite;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        #lightbox-img {
+            max-width: 90%;
+            max-height: 90vh;
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .video-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem auto;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .video-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .video-item:hover {
+            transform: scale(1.02);
+        }
+
+        .video-item video {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid #ff0000;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #ff0000 }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -10px;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(1000deg);
+            }
+        }
+
+        .secret-message {
+            margin: 2rem auto;
+            padding: 1rem;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .secret-message:hover {
+            transform: scale(1.05);
+        }
+
+        .revealed {
+            background: rgba(255, 0, 0, 0.3);
+        }
+
+        @keyframes rainbow-bg {
+            0% { background-color: #ff0000; }
+            20% { background-color: #ff69b4; }
+            40% { background-color: #ff1493; }
+            60% { background-color: #ff00ff; }
+            80% { background-color: #ff69b4; }
+            100% { background-color: #ff0000; }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        if (!sessionStorage.getItem('authenticated')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <div class="container">
+        <h1 class="typewriter">Happy Birthday Genevieve My Love!</h1>
+        <div class="heart">❤️❤️❤️</div>
+        <div class="countdown" id="countdown"></div>
+        
+        <div class="wishes">
+            <div class="wish" style="animation-delay: 0.2s">❤️ To the most beautiful soul I've ever known</div>
+            <div class="wish" style="animation-delay: 0.4s">🌟 May your day be as bright as your smile</div>
+            <div class="wish" style="animation-delay: 0.6s">💫 Thank you for making my life complete</div>
+            <div class="wish" style="animation-delay: 0.8s">🎂 Here's to another year of love and laughter</div>
+            <div class="wish" style="animation-delay: 1.0s">💝 I love you more with each passing day</div>
+        </div>
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="images/photo1.jpg" alt="Happy memory 1">
+            </div>
+            <div class="gallery-item">
+                <img src="images/photo2.jpg" alt="Happy memory 2">
+            </div>
+            <div class="gallery-item">
+                <img src="images/photo3.jpg" alt="Happy memory 3">
+            </div>
+            <div class="gallery-item">
+                <img src="images/photo4.jpg" alt="Happy memory 4">
+            </div>
+            <div class="gallery-item">
+                <img src="images/photo5.jpg" alt="Happy memory 5">
+            </div>
+            <div class="gallery-item">
+                <img src="images/photo6.jpg" alt="Happy memory 6">
+            </div>
+            <div class="gallery-item">
+                <img src="images/photo7.jpg" alt="Happy memory 7">
+            </div>
+            <div class="gallery-item">
+                <img src="images/photo8.jpg" alt="Happy memory 8">
+            </div>
+        </div>
+        <div class="video-gallery">
+            <div class="video-item">
+                <video controls preload="metadata">
+                    <source src="videos/memory1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="video-item">
+                <video controls preload="metadata">
+                    <source src="videos/memory2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="video-item">
+                <video controls preload="metadata">
+                    <source src="videos/memory3.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div class="secret-message" onclick="revealMessage(this)">
+            Click for a secret message ❤️
+        </div>
+    </div>
+
+    <div class="hearts-bg"></div>
+
+    <div class="music-player">
+        <audio id="bgMusic" preload="auto" loop>
+            <source src="music/birthday-song.m4a" type="audio/mp4">
+            <source src="music/birthday-song.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <button onclick="toggleMusic()" class="music-btn">🎵</button>
+    </div>
+
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="Enlarged image">
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const birthday = new Date('2025-06-26T00:00:00');
+            const now = new Date();
+            const diff = birthday - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML = 
+                `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+            
+            if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
+                createConfetti();
+                document.body.style.animation = 'rainbow-bg 5s infinite';
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        function toggleMusic() {
+            const audio = document.getElementById('bgMusic');
+            const musicBtn = document.querySelector('.music-btn');
+            
+            audio.play().then(() => {
+                if (audio.paused) {
+                    audio.play();
+                    musicBtn.innerHTML = '⏸️';
+                } else {
+                    audio.pause();
+                    musicBtn.innerHTML = '🎵';
+                }
+            }).catch(error => {
+                console.error('Audio playback failed:', error);
+                alert('Please interact with the page first to enable music playback');
+            });
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.animationDuration = (Math.random() * 15 + 5) + 's';
+            document.querySelector('.hearts-bg').appendChild(heart);
+            setTimeout(() => heart.remove(), 15000);
+        }
+        
+        setInterval(createHeart, 300);
+
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            img.onclick = function() {
+                document.getElementById('lightbox').style.display = 'block';
+                document.getElementById('lightbox-img').src = this.src;
+            }
+        });
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                document.body.appendChild(confetti);
+            }
+        }
+
+        // Add this to your existing window.onload or at the end of body
+        createConfetti();
+
+        function revealMessage(element) {
+            element.innerHTML = "You're the best thing that ever happened to me! 💝";
+            element.classList.add('revealed');
+        }
+    </script>
+</body>
+</html>
